@@ -422,19 +422,6 @@ Att scrolla är så fult, av någon anledning. Gör det bättre.
 #+begin_src elisp
   (repeat-mode 1)
 
-  ;; Sexp navigation
-  (defvar sexp-repeat-map
-    (let ((map (make-sparse-keymap)))
-      (define-key map (kbd "f") #'forward-sexp)
-      (define-key map (kbd "b") #'backward-sexp)
-      (define-key map (kbd "d") #'down-list)
-      (define-key map (kbd "u") #'backward-up-list)
-      (define-key map (kbd "t") #'transpose-sexps)
-      map))
-
-  (dolist (cmd '(forward-sexp backward-sexp down-list backward-up-list transpose-sexps))
-    (put cmd 'repeat-map 'sexp-repeat-map))
-
   ;; Link navigation
   (defvar org-link-repeat-map
     (let ((map (make-sparse-keymap)))
