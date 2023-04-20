@@ -1,0 +1,9 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Terminal=false
+Exec=xinput disable xwayland-pointer-gestures:14
+Icon=/usr/share/icons/Papirus-Dark/64x64@2x/apps/libinput-gestures.svg
+Name=Xinput-Disable-XWayland-Gestures
+Comment=Fix Wine Crash on Gesture Use
+X-GNOME-Autostart-enabled=true
