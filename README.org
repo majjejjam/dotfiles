@@ -1,0 +1,7 @@
+* Personal dotfiles
+These files are handled through GNU Stow. To install them, clone this
+repository, =cd= into it, and run:
+#+begin_src bash
+  stow . -t ~
+#+end_src
+This will create symbolic links.
