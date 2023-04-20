@@ -1379,9 +1379,6 @@ This is achieved with olivetti
 #+begin_src elisp
   (use-package corfu
     :custom
-    (corfu-auto t)
-    (corfu-auto-prefix 2)
-    (corfu-auto-delay 0.0)
     (corfu-scroll-margin 3)
     (corfu-cycle nil)
     (corfu-quit-at-boundary 'separator)
