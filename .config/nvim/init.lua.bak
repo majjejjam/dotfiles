@@ -1,0 +1,14 @@
+local present, impatiant = pcall(require, "impatiant")
+
+if present then
+	impatiant.enable_profile()
+end
+
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
+require("plugins")
+require("options")
+require("keymaps")
+require("highlights")
+require("autocmds")
