@@ -1702,6 +1702,12 @@ Replace VC with Magit in ~project.el~.
   (use-package lua-mode)
 #+end_src
 
+** Containers
+#+begin_src elisp
+(use-package dockerfile-mode)
+#+end_src
+
+
 * TODO Snippets
 
 - [ ] Jag vill ha mk och dm!
