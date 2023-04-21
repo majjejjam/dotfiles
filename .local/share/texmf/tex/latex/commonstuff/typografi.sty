@@ -1,0 +1,180 @@
+\ProvidesPackage{typografi}[2022/09/24 Anpassade miljöer för 1,5-kolumnslayout med memoir.]
+\RequirePackage{marginfix}
+
+\chapterstyle{reparticle}
+
+% Numrera från sec
+\counterwithout{section}{chapter}
+\counterwithout{figure}{chapter}
+\counterwithout{table}{chapter}
+
+% Chapter and section headings
+\renewcommand*{\chaptitlefont}{\itshape\Huge}
+\renewcommand*{\chapnumfont}{\normalfont\Huge}
+\renewcommand*{\secheadstyle}{\itshape\Large}
+\setsecnumformat{\normalfont\csname the#1\endcsname\quad}
+\setsubsecheadstyle{\itshape\large}
+% \setbeforesubsecskip{\baselineskip}
+\setsecnumdepth{subsection}
+
+% \setcounter{secnumdepth}{1}
+
+% Table of contents
+\renewcommand{\cftchapterleader}{~}% Content between section title and page number
+\renewcommand{\cftchapterfont}{\Large\itshape}
+\renewcommand{\cftchapterpresnum}{\normalfont}
+\renewcommand{\cftchapterpagefont}{\Large\normalfont}
+\settocdepth{chapter}
+
+% MEMOIR LAYOUT
+\setlength{\baselineskip}{14pt}
+\setlength{\normalbaselineskip}{14pt}
+
+% GEOMETRY
+\settrims{0pt}{0pt}
+\settypeblocksize{49\baselineskip}{107mm}{*}
+\setlrmargins{24.8mm}{*}{*}
+\setulmargins{27.4mm}{*}{*}
+\setheadfoot{\baselineskip}{\baselineskip}
+\setheaderspaces{*}{2\baselineskip}{*}
+\setmarginnotes{8.2mm}{49.4mm}{\onelineskip}
+\checkandfixthelayout
+
+% TEXT
+% ragged2e provides ragged justification with hyphenation
+% \AtBeginDocument{\RaggedRight}
+\setmpjustification{\RaggedLeft}{\RaggedRight}
+\setlength{\RaggedRightParindent}{1.0pc}
+\setlength{\parindent}{1pc}
+\setlength{\parskip}{0pt}
+% linespacing ~ 14pt
+\linespread{1.17}
+
+% PAGE STYLE - HEADERS AND (NO) FOOTERS
+\makepagestyle{myheadings}
+\makeoddhead{myheadings}%
+{}{}{\textsc{\rightmark}\quad\thepage}
+\makeevenhead{myheadings}%
+{\thepage\quad\leftmark}{}{}
+% font settings for page headers
+\makeevenfoot{myheadings}%
+{}{}{}
+\makeoddfoot{myheadings}%
+{}{}{}
+
+% use small caps in running headers
+\renewcommand*{\memUChead}[1]{\textsc{\MakeTextLowercase{#1}}}
+
+% chapters on left, sections on right, without numbers
+\makepsmarks{myheadings}{%
+  \createmark{chapter}{left}{nonumber}{}{}
+  \createmark{section}{right}{nonumber}{}{}
+  \createplainmark{toc}{both}{\contentsname}
+  \createplainmark{lof}{both}{\listfigurename}
+  \createplainmark{lot}{both}{\listtablename}
+  \createplainmark{bib}{both}{\bibname}
+  \createplainmark{index}{both}{\indexname}
+  \createplainmark{glossary}{both}{\glossaryname}
+}
+
+% full-width-headers
+\setlength{\headwidth}{\textwidth}
+\addtolength{\headwidth}{\marginparsep}
+\addtolength{\headwidth}{\marginparwidth}
+\makerunningwidth{myheadings}{\headwidth}
+\makeheadposition{myheadings}{flushright}{flushleft}{}{}
+
+\pagestyle{myheadings}
+
+% text styling of all side footnotes
+\renewcommand{\footnotesize}{\fontsize{10pt}{12pt}\selectfont}
+\renewcommand{\foottextfont}{\footnotesize\noindent\RaggedRight}
+% styling and placement of mark
+\footmarkstyle{\textsuperscript{#1} }
+\setlength{\footmarkwidth}{0em}
+\setlength{\footmarksep}{0em}
+\setlength{\marginparpush}{12pt}
+% memoir command - do all footnotes in margin
+\footnotesinmargin
+\letcountercounter{sidefootnote}{footnote}
+\renewcommand*{\sidefootform}{\RaggedRight}
+
+% Prevent marpar exceeding bottom margin
+% \let\oldmpar\marginpar
+% \renewcommand{\marginpar}[1]{\oldmpar{\parbox[t]{\marginparwidth}{\tiny#1}}}
+
+% SIDECAPTIONS
+\setsidecaps{\marginparsep}{\marginparwidth}
+\sidecapmargin{outer}
+\setsidecappos{c}
+\renewcommand*{\sidecapstyle}{%
+\captionnamefont{\bfseries} % eller \bfseries
+\ifscapmargleft
+\captionstyle{\RaggedLeft\footnotesize\foottextfont}%
+\else
+\captionstyle{\RaggedRight\footnotesize\foottextfont}%
+\fi}
+
+% fixa när caption är högre än figur
+\makeatletter
+\renewcommand*{\m@mscapopboxes}{%
+	\m@mcalcscapraise%
+	\usebox{\m@mscap@fbox}%\m@mscapcheckside
+	\ifscapmargleft%
+		\rlap{\kern-\m@mscaplkern%
+			\raisebox{\m@mscapraise}{\smash[b]{\usebox{\m@mscap@capbox}}}%
+		}%
+	\else%
+		\rlap{\kern\sidecapsep%
+			\raisebox{\m@mscapraise}{\smash[b]{\usebox{\m@mscap@capbox}}}%
+		}%
+	\fi%
+	\gdef\m@mscapthisside{}%
+	\@mem@scap@afterhook%
+}
+\makeatother
+
+% Få hyperlinkar att referea till början av float och inte caption
+\setfloatadjustment{marginfigure}{\captionsetup{type=figure}}
+\setfloatadjustment{margintable}{\captionsetup{type=table}}
+
+% FULLWIDTH environment
+% The following code should be used *after* any changes to the margins and
+% page layout are made (e.g., after the geometry package has been loaded).
+\newlength{\fullwidthlen}
+\setlength{\fullwidthlen}{\marginparwidth}
+\addtolength{\fullwidthlen}{\marginparsep}
+
+\newenvironment{fullwidth}{%
+	% \begin{adjustwidth*}{}{-\fullwidthlen}%
+	\checkoddpage\ifoddpage\begin{adjustwidth*}{}{-\fullwidthlen}\else\begin{adjustwidth*}{-\fullwidthlen}{}\fi % kommentera om, om error
+}{%
+  \end{adjustwidth*}%
+}
+
+
+% MARGIN CAPTION FOR FULLWIDTH
+\newcommand{\marcap}[1]{
+	\vspace{-\baselineskip}\vspace{-\baselineskip}
+	\sideparmargin{outer}
+	\sidepar{\vspace{2\baselineskip}
+		\caption{#1}
+	}
+}
+% ... for tables
+\newcommand{\tabmarcap}[1]{
+	% \vspace{-\baselineskip}\vspace{-\baselineskip}
+	\sideparmargin{outer}
+	\sidepar{\vspace{-\baselineskip*13}
+		\caption{#1}
+	}
+}
+
+\strictpagecheck % fixar när figur börjar i slutet av sida
+
+% Inline image
+\newcommand{\infig}[1]{%
+  \begingroup\normalfont
+  \includegraphics[height=\fontcharht\font`\B]{#1}%
+  \endgroup
+}

@@ -1,0 +1,61 @@
+\ProvidesPackage{standard-paket}%[2022/09/24 Hämtar och definierar rimliga inställningar för vanligt förekommande paket. Används för språkinställningar, bibliografi, citeringar, tabeller, osv.]
+
+\RequirePackage[swedish]{babel}
+\RequirePackage[T1]{fontenc}
+
+\RequirePackage{biblatex}
+\addbibresource{bibliografi.bib}
+
+\RequirePackage{graphicx, pdfpages, svg}
+% \RequirePackage[table]{xcolor} 
+\graphicspath{{figurer}}
+\RequirePackage{csquotes}
+\RequirePackage{xparse}
+\RequirePackage{xspace} 
+
+\RequirePackage{caption}
+% \RequirePackage{subcaption}
+\captionsetup{
+    % hypcap=false, % Kompatibilitet med hyperref?
+    font=footnotesize,
+    labelfont=bf,
+    labelsep=colon,
+    singlelinecheck=on,
+    justification=RaggedRight,
+    margin=5pt,
+    skip=12pt
+}
+% \captionsetup{font+=smaller}
+
+\RequirePackage[shortlabels]{enumitem}
+\SetEnumerateShortLabel{A}{\textsc{\alph*}}
+\SetEnumerateShortLabel{I}{\textsc{\roman*}}
+\setlist{noitemsep}
+\RequirePackage{booktabs}
+\RequirePackage{ragged2e}
+% \RequirePackage{float} -- use floatrow instad for captions in margins
+% \RequirePackage[pass]{geometry} 
+
+\RequirePackage{multirow}
+\RequirePackage{array}
+\RequirePackage{lipsum}
+\RequirePackage{listings}
+\lstset{basicstyle = \ttfamily,
+columns=fullflexible}
+\RequirePackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue!60!black,citecolor=green!60!black,urlcolor=blue}
+\urlstyle{rm}
+% \RequirePackage{xurl} 
+\RequirePackage{lettrine}
+\RequirePackage{pgfornament}
+\RequirePackage{mdframed}
+
+\RequirePackage{import}
+\RequirePackage{xifthen}
+\RequirePackage{transparent}
+\RequirePackage{tcolorbox} 
+
+\RequirePackage[noabbrev]{cleveref}
+\creflabelformat{equation}{#2\textup{#1}#3}
+
+% \numberwithin{figure}{chapter}

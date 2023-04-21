@@ -1,0 +1,406 @@
+\ProvidesPackage{matte}%[2022/09/24 Hämtar och definierar rimliga inställningar för vanligt förekommande matematikpaket. Symboler för integraler, derivering, siffror och enheter. Tikz och Pgfplots. Även kemi.]
+
+% Other packages
+\RequirePackage{amssymb,amsmath,amsfonts,amsthm,bm}
+\RequirePackage{mathtools}
+\RequirePackage{nicefrac}
+% \RequirePackage{gensymb}
+\RequirePackage[version=4]{mhchem}
+\RequirePackage{chemfig} 
+\let\oldchemfig\chemfig
+\renewcommand{\chemfig}[1]{\oldchemfig[bond join=true,bond style={line width=0.6pt},atom sep=1.7em]{#1}}
+\RequirePackage{cancel}
+\RequirePackage{siunitx}
+% \AtBeginDocument{\RenewCommandCopy\qty\SI}
+\sisetup{locale = FR}
+\sisetup{per-mode=symbol}
+\sisetup{mode = text}
+\DeclareSIUnit\permille{\text{\textperthousand}}
+\RequirePackage{physics}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{theorems,skins}
+% \tcbuselibrary{skins}
+% \tcbuselibrary{breakable}
+% \newtcbtheorem[number within=section]{sats}{Sats}%
+% {theorem style=plain,arc=0mm,colback=black!10,colframe=black!10,coltitle=black,fonttitle=\bfseries}{th}
+
+\theoremstyle{plain}% from `amsthm'
+\newtheorem{sats}{Sats}% from `amsthm'
+\tcolorboxenvironment{sats}{
+spartan,frame empty,colback=gray!15,
+before skip=10pt,after skip=10pt}
+\crefname{sats}{sats}{satser}
+\Crefname{sats}{Sats}{Satser}
+\newtcolorbox{empheqboxed}[1][]{colback=gray!15, 
+    frame empty,
+    % hbox,
+ sharpish corners,
+ top=0mm, % default value 2mm
+ % bottom=2mm
+}
+
+\RequirePackage{tikz}
+\usetikzlibrary{arrows,calc,intersections,shapes.geometric}
+\tikzset{anchor/.append code=\let\tikz@auto@anchor\relax}
+\tikzset{>=latex}
+
+\RequirePackage{pgfplots}
+\pgfplotsset{compat=1.17}
+
+% Environment definitions
+\newtheoremstyle{tnamed}
+	{\topsep}
+	{\topsep}
+	{}
+	{}
+	{\bfseries}
+	{.}
+	{ }
+	{\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}
+
+\newtheoremstyle{notenamed*}
+	{\topsep}
+	{\topsep}
+	{\slshape}
+	{}
+	{\bfseries}
+	{:}
+	{ }
+	{\thmnote{#3}}
+
+\theoremstyle{notenamed*}
+\newtheorem{note*}{Note}
+
+\theoremstyle{tnamed}
+\newtheorem{tnamed}[subsection]{Theorem}
+\newtheorem{cnamed}[subsection]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[subsection]{Definition}
+\newtheorem{example}[subsection]{Example}
+\newtheorem{corollary}[subsection]{Corollary}
+\newtheorem{lemma}[subsection]{Lemma}
+\newtheorem{proposition}[subsection]{Proposition}
+\newtheorem{exercise}[subsection]{Exercise}
+
+\newcommand{\notebox}[2]{%
+\begin{center}
+   \fbox{
+      \centering
+      \parbox{#1}{%
+         #2
+      }%
+   }%
+\end{center}
+}
+
+\newcommand{\units}[1]{\mathrm{#1}}
+
+% Sets
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+
+% Shortcuts
+\newcommand{\od}[2]{\frac{\mathrm{d} #1}{\mathrm{d} #2}}
+\newcommand{\odn}[3]{\frac{\mathrm{d}^{#1} #2}{\mathrm{d} #3^{#1}}}
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\pdn}[3]{\frac{\partial^{#1} #2}{\partial #3^{#1}}}
+\newcommand{\then}{\Longrightarrow \quad}
+\newcommand{\Then}{\quad \Longrightarrow \quad}
+\newcommand{\D}{\,\mathrm{d}}
+\newcommand{\ve}{\bm}
+\newcommand{\del}{\partial}
+\renewcommand{\div}{\nabla \cdot}
+
+% Operators
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\J}{J}
+\DeclareMathOperator{\Y}{Y}
+\DeclareMathOperator{\Ai}{Ai}
+\DeclareMathOperator{\Bi}{Bi}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\e}{e}
+
+% Hat lower case letters
+\newcommand{\hta}{\hat{a}}
+\newcommand{\htb}{\hat{b}}
+\newcommand{\htc}{\hat{c}}
+\newcommand{\htd}{\hat{d}}
+\newcommand{\hte}{\hat{e}}
+\newcommand{\htf}{\hat{f}}
+\newcommand{\htg}{\hat{g}}
+\newcommand{\hth}{\hat{h}}
+\newcommand{\hti}{\hat{\imath}}
+\newcommand{\htj}{\hat{\jmath}}
+\newcommand{\htk}{\hat{k}}
+\newcommand{\htl}{\hat{l}}
+\newcommand{\htm}{\hat{m}}
+\newcommand{\htn}{\hat{n}}
+\newcommand{\hto}{\hat{o}}
+\newcommand{\htp}{\hat{p}}
+\newcommand{\htq}{\hat{q}}
+\newcommand{\htr}{\hat{r}}
+\newcommand{\hts}{\hat{s}}
+\newcommand{\htt}{\hat{t}}
+\newcommand{\htu}{\hat{u}}
+\newcommand{\htv}{\hat{v}}
+\newcommand{\htw}{\hat{w}}
+\newcommand{\htx}{\hat{x}}
+\newcommand{\hty}{\hat{y}}
+\newcommand{\htz}{\hat{z}}
+
+% Hat upper case letters
+\newcommand{\htA}{\hat{A}}
+\newcommand{\htB}{\hat{B}}
+\newcommand{\htC}{\hat{C}}
+\newcommand{\htD}{\hat{D}}
+\newcommand{\htE}{\hat{E}}
+\newcommand{\htF}{\hat{F}}
+\newcommand{\htG}{\hat{G}}
+\newcommand{\htH}{\hat{H}}
+\newcommand{\htI}{\hat{I}}
+\newcommand{\htJ}{\hat{J}}
+\newcommand{\htK}{\hat{K}}
+\newcommand{\htL}{\hat{L}}
+\newcommand{\htM}{\hat{M}}
+\newcommand{\htN}{\hat{N}}
+\newcommand{\htO}{\hat{O}}
+\newcommand{\htP}{\hat{P}}
+\newcommand{\htQ}{\hat{Q}}
+\newcommand{\htR}{\hat{R}}
+\newcommand{\htS}{\hat{S}}
+\newcommand{\htT}{\hat{T}}
+\newcommand{\htU}{\hat{U}}
+\newcommand{\htV}{\hat{V}}
+\newcommand{\htW}{\hat{W}}
+\newcommand{\htX}{\hat{X}}
+\newcommand{\htY}{\hat{Y}}
+\newcommand{\htZ}{\hat{Z}}
+
+% Hat lower case Greek letters
+\newcommand{\htalpha}{\hat{\alpha}}
+\newcommand{\htbeta}{\hat{\beta}}
+\newcommand{\htgamma}{\hat{\gamma}}
+\newcommand{\htdelta}{\hat{\delta}}
+\newcommand{\htepsilon}{\hat{\epsilon}}
+\newcommand{\htzeta}{\hat{\zeta}}
+\newcommand{\hteta}{\hat{\eta}}
+\newcommand{\httheta}{\hat{\theta}}
+\newcommand{\htiota}{\hat{\iota}}
+\newcommand{\htkappa}{\hat{\kappa}}
+\newcommand{\htlambda}{\hat{\lambda}}
+\newcommand{\htmu}{\hat{\mu}}
+\newcommand{\htnu}{\hat{\nu}}
+\newcommand{\htxi}{\hat{\xi}}
+\newcommand{\htpi}{\hat{\pi}}
+\newcommand{\htrho}{\hat{\rho}}
+\newcommand{\htsigma}{\hat{\sigma}}
+\newcommand{\httau}{\hat{\htau}}
+\newcommand{\htupsilon}{\hat{\upsilon}}
+\newcommand{\htphi}{\hat{\phi}}
+\newcommand{\htchi}{\hat{\chi}}
+\newcommand{\htpsi}{\hat{\psi}}
+\newcommand{\htvarphi}{\hat{\varphi}}
+\newcommand{\htomega}{\hat{\omega}}
+
+% Hat upper case Greek letters
+\newcommand{\htGamma}{\hat{\Gamma}}
+\newcommand{\htDelta}{\hat{\Delta}}
+\newcommand{\htTheta}{\hat{\Theta}}
+\newcommand{\htLambda}{\hat{\Lambda}}
+\newcommand{\htXi}{\hat{\Xi}}
+\newcommand{\htPi}{\hat{\Pi}}
+\newcommand{\htSigma}{\hat{\Sigma}}
+\newcommand{\htPhi}{\hat{\phi}}
+\newcommand{\htPsi}{\hat{\Psi}}
+\newcommand{\htOmega}{\hat{\Omega}}
+
+% Tilde lower case letters
+\newcommand{\ta}{\tilde{a}}
+\newcommand{\tb}{\tilde{b}}
+\newcommand{\tc}{\tilde{c}}
+\newcommand{\td}{\tilde{d}}
+\newcommand{\te}{\tilde{e}}
+\newcommand{\tf}{\tilde{f}}
+\newcommand{\tg}{\tilde{g}}
+\newcommand{\tlh}{\tilde{h}}
+\newcommand{\ti}{\tilde{\imath}}
+\newcommand{\tj}{\tilde{\jmath}}
+\newcommand{\tk}{\tilde{k}}
+\newcommand{\tl}{\tilde{l}}
+\newcommand{\tm}{\tilde{m}}
+\newcommand{\tn}{\tilde{n}}
+\newcommand{\tlo}{\tilde{o}}
+\newcommand{\tp}{\tilde{p}}
+\newcommand{\tq}{\tilde{q}}
+\newcommand{\ts}{\tilde{s}}
+\newcommand{\tlt}{\tilde{t}}
+\newcommand{\tu}{\tilde{u}}
+\newcommand{\tv}{\tilde{v}}
+\newcommand{\tw}{\tilde{w}}
+\newcommand{\tx}{\tilde{x}}
+\newcommand{\ty}{\tilde{y}}
+\newcommand{\tz}{\tilde{z}}
+
+% Tilde upper case letters
+\newcommand{\tA}{\tilde{A}}
+\newcommand{\tB}{\tilde{B}}
+\newcommand{\tC}{\tilde{C}}
+\newcommand{\tD}{\tilde{D}}
+\newcommand{\tE}{\tilde{E}}
+\newcommand{\tF}{\tilde{F}}
+\newcommand{\tG}{\tilde{G}}
+\newcommand{\tH}{\tilde{H}}
+\newcommand{\tI}{\tilde{I}}
+\newcommand{\tJ}{\tilde{J}}
+\newcommand{\tK}{\tilde{K}}
+\newcommand{\tL}{\tilde{L}}
+\newcommand{\tM}{\tilde{M}}
+\newcommand{\tN}{\tilde{N}}
+\newcommand{\tO}{\tilde{O}}
+\newcommand{\tP}{\tilde{P}}
+\newcommand{\tQ}{\tilde{Q}}
+\newcommand{\tR}{\tilde{R}}
+\newcommand{\tS}{\tilde{S}}
+\newcommand{\tT}{\tilde{T}}
+\newcommand{\tU}{\tilde{U}}
+\newcommand{\tV}{\tilde{V}}
+\newcommand{\tW}{\tilde{W}}
+\newcommand{\tX}{\tilde{X}}
+\newcommand{\tY}{\tilde{Y}}
+\newcommand{\tZ}{\tilde{Z}}
+
+% Tilde lower case Greek letters
+\newcommand{\talpha}{\tilde{\alpha}}
+\newcommand{\tbeta}{\tilde{\beta}}
+\newcommand{\tgamma}{\tilde{\gamma}}
+\newcommand{\tdelta}{\tilde{\delta}}
+\newcommand{\tepsilon}{\tilde{\epsilon}}
+\newcommand{\tzeta}{\tilde{\zeta}}
+\newcommand{\teta}{\tilde{\eta}}
+\newcommand{\ttheta}{\tilde{\theta}}
+\newcommand{\tiota}{\tilde{\iota}}
+\newcommand{\tkappa}{\tilde{\kappa}}
+\newcommand{\tlambda}{\tilde{\lambda}}
+\newcommand{\tmu}{\tilde{\mu}}
+\newcommand{\tnu}{\tilde{\nu}}
+\newcommand{\txi}{\tilde{\xi}}
+\newcommand{\tpi}{\tilde{\pi}}
+\newcommand{\trho}{\tilde{\rho}}
+\newcommand{\tsigma}{\tilde{\sigma}}
+\newcommand{\ttau}{\tilde{\tau}}
+\newcommand{\tupsilon}{\tilde{\upsilon}}
+\newcommand{\tphi}{\tilde{\phi}}
+\newcommand{\tchi}{\tilde{\chi}}
+\newcommand{\tpsi}{\tilde{\psi}}
+\newcommand{\tvarphi}{\tilde{\varphi}}
+\newcommand{\tomega}{\tilde{\omega}}
+
+% Tilde upper case Greek letters
+\newcommand{\tGamma}{\tilde{\Gamma}}
+\newcommand{\tDelta}{\tilde{\Delta}}
+\newcommand{\tTheta}{\tilde{\Theta}}
+\newcommand{\tLambda}{\tilde{\Lambda}}
+\newcommand{\tXi}{\tilde{\Xi}}
+\newcommand{\tPi}{\tilde{\Pi}}
+\newcommand{\tSigma}{\tilde{\Sigma}}
+\newcommand{\tPhi}{\tilde{\phi}}
+\newcommand{\tPsi}{\tilde{\Psi}}
+\newcommand{\tOmega}{\tilde{\Omega}}
+
+% Bar lower case letters
+\newcommand{\brb}{\bar{b}}
+\newcommand{\brc}{\bar{c}}
+\newcommand{\brd}{\bar{d}}
+\newcommand{\bre}{\bar{e}}
+\newcommand{\brf}{\bar{f}}
+\newcommand{\brg}{\bar{g}}
+\newcommand{\brh}{\bar{h}}
+\newcommand{\bri}{\bar{\imath}}
+\newcommand{\brj}{\bar{\jmath}}
+\newcommand{\brk}{\bar{k}}
+\newcommand{\brl}{\bar{l}}
+\newcommand{\brm}{\bar{m}}
+\newcommand{\brn}{\bar{n}}
+\newcommand{\bro}{\bar{o}}
+\newcommand{\brp}{\bar{p}}
+\newcommand{\brq}{\bar{q}}
+\newcommand{\brr}{\bar{r}}
+\newcommand{\brs}{\bar{s}}
+\newcommand{\brt}{\bar{t}}
+\newcommand{\bru}{\bar{u}}
+\newcommand{\brv}{\bar{v}}
+\newcommand{\brw}{\bar{w}}
+\newcommand{\brx}{\bar{x}}
+\newcommand{\bry}{\bar{y}}
+\newcommand{\brz}{\bar{z}}
+
+% Bar upper case letters
+\newcommand{\brA}{\bar{A}}
+\newcommand{\brB}{\bar{B}}
+\newcommand{\brC}{\bar{C}}
+\newcommand{\brD}{\bar{D}}
+\newcommand{\brE}{\bar{E}}
+\newcommand{\brF}{\bar{F}}
+\newcommand{\brG}{\bar{G}}
+\newcommand{\brH}{\bar{H}}
+\newcommand{\brI}{\bar{I}}
+\newcommand{\brJ}{\bar{J}}
+\newcommand{\brK}{\bar{K}}
+\newcommand{\brL}{\bar{L}}
+\newcommand{\brM}{\bar{M}}
+\newcommand{\brN}{\bar{N}}
+\newcommand{\brO}{\bar{O}}
+\newcommand{\brP}{\bar{P}}
+\newcommand{\brQ}{\bar{Q}}
+\newcommand{\brR}{\bar{R}}
+\newcommand{\brS}{\bar{S}}
+\newcommand{\brT}{\bar{T}}
+\newcommand{\brU}{\bar{U}}
+\newcommand{\brV}{\bar{V}}
+\newcommand{\brW}{\bar{W}}
+\newcommand{\brX}{\bar{X}}
+\newcommand{\brY}{\bar{Y}}
+\newcommand{\brZ}{\bar{Z}}
+
+% Bar lower case Greek letters
+\newcommand{\bralpha}{\bar{\alpha}}
+\newcommand{\brbeta}{\bar{\beta}}
+\newcommand{\brgamma}{\bar{\gamma}}
+\newcommand{\brdelta}{\bar{\delta}}
+\newcommand{\brepsilon}{\bar{\epsilon}}
+\newcommand{\brzeta}{\bar{\zeta}}
+\newcommand{\breta}{\bar{\eta}}
+\newcommand{\brtheta}{\bar{\brheta}}
+\newcommand{\briota}{\bar{\iota}}
+\newcommand{\brkappa}{\bar{\kappa}}
+\newcommand{\brlambda}{\bar{\lambda}}
+\newcommand{\brmu}{\bar{\mu}}
+\newcommand{\brnu}{\bar{\nu}}
+\newcommand{\brxi}{\bar{\xi}}
+\newcommand{\brpi}{\bar{\pi}}
+\newcommand{\brrho}{\bar{\rho}}
+\newcommand{\brsigma}{\bar{\sigma}}
+\newcommand{\brtau}{\bar{\brau}}
+\newcommand{\brupsilon}{\bar{\upsilon}}
+\newcommand{\brphi}{\bar{\phi}}
+\newcommand{\brchi}{\bar{\chi}}
+\newcommand{\brpsi}{\bar{\psi}}
+\newcommand{\brvarphi}{\bar{\varphi}}
+\newcommand{\bromega}{\bar{\omega}}
+
+% Bar upper case Greek letters
+\newcommand{\brGamma}{\bar{\Gamma}}
+\newcommand{\brDelta}{\bar{\Delta}}
+\newcommand{\brTheta}{\bar{\Theta}}
+\newcommand{\brLambda}{\bar{\Lambda}}
+\newcommand{\brXi}{\bar{\Xi}}
+\newcommand{\brPi}{\bar{\Pi}}
+\newcommand{\brSigma}{\bar{\Sigma}}
+\newcommand{\brPhi}{\bar{\Phi}}
+\newcommand{\brPsi}{\bar{\Psi}}
+\newcommand{\brOmega}{\bar{\Omega}}

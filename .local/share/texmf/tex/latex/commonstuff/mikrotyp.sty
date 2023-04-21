@@ -1,0 +1,48 @@
+\ProvidesPackage{mikrotyp}%[2022/09/24 Inställningar för paketet microtype.]
+
+\RequirePackage[
+verbose=silent,
+final,
+tracking=true,
+kerning=true,
+spacing=true,
+% factor=1100,
+% stretch=10,
+% shrink=10,
+babel
+]{microtype}
+
+\DeclareMicrotypeSet*[tracking]{my}
+{ encoding = {OT1,T1,LY1},
+size = {-small,Large-},
+font = */*/*/sc/* }
+\SetTracking[ no ligatures = f ]{ encoding = *, shape = sc}{ 50 }
+\SetTracking{ encoding = T1, size = -small }{ 20 }
+\SetTracking{ encoding = T1, size = Large- }{ -20 }
+
+\SetExtraKerning[unit = space]
+{ encoding = {OT1,T1,LY1} }
+{
+    :  = {200,}, % = \fontdimen2
+    ;  = {200, }, % ~ \thinspace
+    !  = {200, },
+    ?  = {200, },
+    /  = {200, 200},
+    (  = {,200},
+    )  = {200, },
+    [  = {,200},
+    ]  = {200, },
+}
+
+\SetProtrusion
+[ context = footnote ]
+% { font = */*/*/*/scriptsize } % adapt if necessary
+{ encoding = T1, size = {6,7,8} }
+{ 1 = { ,650}, 2 = { ,400}, 3 = { ,400}, 4 = { ,400}, 5 = { ,400},
+6 = { ,400}, 7 = { ,500}, 8 = { ,400}, 9 = { ,400}, 0 = { ,400} }
+
+% Tillåt protrusion av fotnoter via microtype
+\renewcommand*\@makefnmark{\hbox{\@textsuperscript{\normalfont
+\microtypecontext{protrusion=footnote}\@thefnmark}}}
+\let\m@mmf@prepare\relax
+\let\m@mmf@check\relax
