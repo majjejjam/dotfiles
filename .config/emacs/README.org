@@ -999,8 +999,7 @@ Detta är för att lätt kunna föra anteckningar till pdf:er. Anteckningarna ä
      ("C-x c n" . citar-open-notes)
      ("C-x c r")
      (:map org-mode-map :package org ("C-c b" . #'org-cite-insert))
-     :map minibuffer-local-map
-     ("M-b" . citar-insert-preset)))
+     :map minibuffer-local-map))
 #+end_src
 
 *** citar-embark
